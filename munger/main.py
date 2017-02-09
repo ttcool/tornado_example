@@ -30,10 +30,18 @@ class MungedPageHandler(tornado.web.RequestHandler):
         self.render('munged.html', source_map=source_map, change_lines=change_lines,
                 choice=random.choice)
 
+class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render(
+            "book.html",
+            page_title = "Burt's Books | Home",
+            header_text = "Welcome to Burt's Books!",
+        )
+
 if __name__ == '__main__':
     tornado.options.parse_command_line()
     app = tornado.web.Application(
-        handlers=[(r'/', IndexHandler), (r'/poem', MungedPageHandler)],
+        handlers=[(r'/', IndexHandler), (r'/poem', MungedPageHandler),(r'/book',MainHandler)],
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
         debug=True
